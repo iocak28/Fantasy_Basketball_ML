@@ -119,3 +119,28 @@ for i in range(np.ceil(len(player_slug_year) / 100).astype(int)):
     temp = player_slug_year.loc[100 * i : 100 * (i + 1) - 1,:]
     player_game_raw_data, error_happened = get_player_box_scores(temp)
     player_game_raw_data.to_csv(f'C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 271B/Project/sample_data/player_data/d_{i}_error{error_happened}.csv')
+
+
+## Player Season Data
+    
+def find_player_season_stats(year_start, year_end):
+    
+    years = [i for i in range(year_start, year_end + 1)]
+    player_stats = pd.DataFrame()
+    
+    for i in years:
+        temp = pd.DataFrame(client.players_season_totals(season_end_year = i))
+        temp['season_end_year'] = i
+        
+        player_stats = pd.concat(
+                [player_stats, temp], 
+                axis = 0)
+    
+    player_stats = player_stats.reset_index()
+    player_stats = player_stats.drop(columns = ['index'])
+    
+    return player_stats
+
+player_year_stats_df = find_player_season_stats(1995, 2020)
+player_year_stats_df.to_csv('C:/Users/iocak/OneDrive/Masaüstü/git/Fantasy_Basketball_ML/sample_data/player_season_data/player_season.csv', index = False)
+
