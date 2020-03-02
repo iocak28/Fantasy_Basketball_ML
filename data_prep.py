@@ -6,6 +6,7 @@ from basketball_reference_web_scraper import client
 import os
 import gc
 import datetime
+import matplotlib.pyplot as plt
 
 # gc collect
 gc.collect()
@@ -525,7 +526,7 @@ all_features.drop(columns = ['date_lag_1',
                             'personal_fouls',
                             'plus_minus',
                             'points_scored',
-                            'seconds_played',
+                            #'seconds_played', drop this later, use this in data cleaning
                             'steals',
                             'turnovers',
                             'rebounds',
@@ -563,6 +564,26 @@ all_features = pd.merge(all_features, opponent_avg_player_career, how = 'left', 
 
 all_features = pd.merge(all_features, bed_data_conc, how = 'left', on = ['date', 'team', 'opponent'])
 
+# Data Cleaning
+
+## Check the dist of fantasy points, eliminate outliers
+plt.hist(all_features['fantasy_point'], bins = 50, density=True)
+plt.show()
+
+len(all_features[all_features['fantasy_point'] > 70]) / len(all_features)
+len(all_features[all_features['fantasy_point'] < 0]) / len(all_features)
+
+all_features = all_features.loc[all_features['fantasy_point'] <= 70]
+all_features = all_features.loc[all_features['fantasy_point'] >= 0]
+
+## Eliminate the records where the player got low points and did not play too much
+len(all_features[(all_features['fantasy_point'] <= 0) & (all_features['seconds_played'] < 60)]) / len(all_features)
+len(all_features[(all_features['fantasy_point'] <= 3) & (all_features['seconds_played'] < 60)]) / len(all_features)
+
+all_features = all_features.loc[~((all_features['fantasy_point'] <= 3) & (all_features['seconds_played'] < 60))]
+
+all_features.drop(columns = ['seconds_played'], inplace = True)
+
 # Check missing data 
 
 ## There is a mismatch in betting data date. subtracting 1 solved. 
@@ -572,6 +593,9 @@ nancounts = all_features.isnull().sum()
         
 ## Drop NAs
 all_features = all_features.dropna()
+
+## reset index
+all_features = all_features.reset_index(drop = True)
 
 ## Save data
 all_features.to_parquet(target_path + 'all_data.parquet', index = False)
