@@ -7,6 +7,7 @@ import os
 import gc
 import datetime
 import matplotlib.pyplot as plt
+from sklearn import linear_model
 
 # gc collect
 gc.collect()
@@ -56,16 +57,6 @@ player_df['double_double'] = np.where(player_df['double_count'] >= 2, 1, 0)
 player_df['triple_double'] = np.where(player_df['double_count'] >= 3, 1, 0)
 
 
-#player_df[['points_scored', 
-#           'made_three_point_field_goals', 
-#           'rebounds', 
-#           'assists', 
-#           'steals', 
-#           'blocks', 
-#           'turnovers',
-#           'double_double',
-#           'triple_double']]
-
 player_df['fantasy_point'] = (1 * player_df['points_scored'] + 
          0.5 * player_df['made_three_point_field_goals'] + 
          1.25 * player_df['rebounds'] + 
@@ -79,6 +70,22 @@ player_df['fantasy_point'] = (1 * player_df['points_scored'] +
 # Add Features
 
 # Player Features
+
+## Startup Feature from Salary Data
+player_df.loc[player_df['starter'].isnull(), 'starter'] = -1 
+
+player_df['starter_yes'] = 0
+player_df['starter_no'] = 0
+
+player_df.loc[player_df['starter'] == 1, 'starter_yes'] = 1
+player_df.loc[player_df['starter'] == 0, 'starter_no'] = 1
+
+## Salary data
+player_df['salary_edited'] =player_df.groupby('name')['salary'].fillna(method="ffill")
+player_df.loc[player_df['salary_edited'].isnull()] = -1
+
+player_df['no_salary_info'] = 0
+player_df.loc[player_df['salary_edited'] == -1, 'no_salary_info'] = 1
 
 ## Home-Away
 player_df['is_home'] = 0
@@ -100,7 +107,49 @@ feature_lagger(player_df, 'date', 1)
 player_df['days_since_last_game'] = (pd.to_datetime(player_df['date'], format = '%Y-%m-%d') 
                                     - pd.to_datetime(player_df['date_lag_1'], format = '%Y-%m-%d')).dt.days
 
-### Lag 1, 2 ,3 Features
+### Weighted moving average weight tuner function
+def wma_feature_optimizer(feature_source_wgt = 'fantasy_point', train_before = 2016, look_lag = 30):
+    '''
+    Optimize weights in feature extraction:
+        Provide:
+            feature_source_wgt = 'fantasy_point' (feature name), 
+            train_before = 2015 (optimize using the data before this season end year, including), 
+            look_lag = 30, (search weights in maximum this lag)
+            
+        Output: Updates player_df
+    '''
+    ### Call Lag Function
+    for j in range(look_lag):
+        feature_lagger(player_df, feature_source_wgt, j + 1)
+        print(feature_source_wgt, j + 1)
+
+    ### Fill all NAs with 0
+    player_df.fillna(0, inplace = True)
+    
+    ### filter df to before 2015 data to prevent data leak
+    filtered_df = player_df[player_df['season_end_year'] <= train_before]
+
+    ### fit a linear regression to find the weights
+    train = filtered_df[[f'{feature_source_wgt}_lag_{str(i + 1)}' for i in range(look_lag)]]
+    train_labels = filtered_df[['fantasy_point']]
+    
+    ### fit model
+    lr_model = linear_model.LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+    
+    ### Train the model using the training sets
+    lr_model.fit(train, train_labels)
+    
+    ### find coefs
+    coefs = lr_model.coef_.T
+    intercept = lr_model.intercept_[0]
+    
+    ### calculate new feature
+    player_df[f'predictor_{feature_source_wgt}_wma_{look_lag}'] = np.dot(np.array(player_df[[f'{feature_source_wgt}_lag_{str(i + 1)}' for i in range(look_lag)]]), coefs) + intercept
+    
+    ### drop helper columns
+    player_df.drop(columns = [f'{feature_source_wgt}_lag_{str(i + 1)}' for i in range(look_lag)], inplace = True)
+
+### Call weighted moving average function
 feature_sources = ['assists',
                    'attempted_field_goals',
                    'attempted_free_throws',
@@ -121,18 +170,22 @@ feature_sources = ['assists',
                    'fantasy_point',
                    'days_since_last_game']
 
+for i in feature_sources:
+    wma_feature_optimizer(feature_source_wgt = i, train_before = 2015, look_lag = 30)
+
+### Lag 1, 2 ,3 Features
 ### Call Lag Function
 for i in feature_sources:
     for j in range(3):
         feature_lagger(player_df, i, j + 1)
         print(i, j + 1)
 
-## Write roll_mean function: Provide feature name but uses lag_1 column
+### Write roll_mean function: Provide feature name but uses lag_1 column
 
 def feature_roll_mean(df, cols, roll_n):
-    df[[i + '_lag_' + str(1) + f'_rollmean_{roll_n}' for i in cols]] = df.groupby('name')[[i + '_lag_' + str(1) for i in cols]].rolling(window = roll_n).mean().reset_index(drop = True)
+    df[[i + '_lag_' + str(1) + f'_rollmean_{roll_n}' for i in cols]] = df.groupby('name')[[i + '_lag_' + str(1) for i in cols]].rolling(window = roll_n).mean().reset_index(drop = True)   
 
-### Call Lag Function
+### Call RollMean Function
 for i in range(3):
     feature_roll_mean(player_df, feature_sources, i + 3)
     print(i + 1)
@@ -251,7 +304,26 @@ player_season_stats.update(player_season_stats[['per_minute_player_cumul_' + i f
 # Team Features
 
 ## Player lag-mean features converted to team
-team_feature_set_lag = ['assists_lag_1',
+team_feature_set_lag = ['predictor_assists_wma_30',
+ 'predictor_attempted_field_goals_wma_30',
+ 'predictor_attempted_free_throws_wma_30',
+ 'predictor_attempted_three_point_field_goals_wma_30',
+ 'predictor_defensive_rebounds_wma_30',
+ 'predictor_made_field_goals_wma_30',
+ 'predictor_made_free_throws_wma_30',
+ 'predictor_made_three_point_field_goals_wma_30',
+ 'predictor_personal_fouls_wma_30',
+ 'predictor_points_scored_wma_30',
+ 'predictor_seconds_played_wma_30',
+ 'predictor_steals_wma_30',
+ 'predictor_turnovers_wma_30',
+ 'predictor_rebounds_wma_30',
+ 'predictor_double_count_wma_30',
+ 'predictor_double_double_wma_30',
+ 'predictor_triple_double_wma_30',
+ 'predictor_fantasy_point_wma_30',
+ 'predictor_days_since_last_game_wma_30', 
+'assists_lag_1',
 'assists_lag_2',
 'assists_lag_3',
 'attempted_field_goals_lag_1',
@@ -532,7 +604,9 @@ all_features.drop(columns = ['date_lag_1',
                             'rebounds',
                             'double_count',
                             'double_double',
-                            'triple_double'], inplace = True)
+                            'triple_double',
+                            'starter', 
+                            'salary'], inplace = True)
 
 player_season_stats.drop(columns = ['assists',
                             'attempted_field_goals',
@@ -599,5 +673,3 @@ all_features = all_features.reset_index(drop = True)
 
 ## Save data
 all_features.to_parquet(target_path + 'all_data.parquet', index = False)
-
-

@@ -21,11 +21,11 @@ from sklearn.model_selection import TimeSeriesSplit
 from sklearn.ensemble import RandomForestRegressor
 import xgboost
 from matplotlib import pyplot
-from keras.callbacks import ModelCheckpoint
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Flatten, Dropout
-#from talos.model import layers
-from keras.regularizers import l1
+#from keras.callbacks import ModelCheckpoint
+#from keras.models import Sequential
+#from keras.layers import Dense, Activation, Flatten, Dropout
+##from talos.model import layers
+#from keras.regularizers import l1
 
 # gc collect
 gc.collect()
@@ -61,14 +61,29 @@ scaler.fit(train)
 train_n = scaler.transform(train)
 test_n = scaler.transform(test)
 
-## PCA
-#
-### Make an instance of the Model
-#pca = PCA(.90)
-#pca.fit(train_n)
-#
-#train_n = pca.transform(train_n)
-#test_n = pca.transform(test_n)
+# PCA
+
+## Make an instance of the Model
+pca = PCA(.90)
+pca.fit(train_n)
+
+train_n = pca.transform(train_n)
+test_n = pca.transform(test_n)
+
+# Plot % Variance explained
+variance = pca.explained_variance_ratio_ #calculate variance ratios
+
+var=np.cumsum(np.round(pca.explained_variance_ratio_, decimals=3)*100)
+var #cumulative sum of variance explained with [n] features
+
+pyplot.ylabel('% Variance Explained')
+pyplot.xlabel('# of Features')
+pyplot.title('PCA Analysis')
+pyplot.ylim(30,100.5)
+pyplot.style.context('seaborn-whitegrid')
+
+
+pyplot.plot(var)
 
 # Try a basic model
 
