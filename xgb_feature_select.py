@@ -61,15 +61,15 @@ scaler.fit(train)
 train = scaler.transform(train)
 test = scaler.transform(test)
 
-winner_model = xgboost.XGBRegressor(alpha=0.5, base_score=0.5, booster=None, colsample_bylevel=1,
-             colsample_bynode=1, colsample_bytree=0.7, gamma=0, gpu_id=-1,
-             importance_type='gain', interaction_constraints=None, 
-             learning_rate=0.05, max_delta_step=0, max_depth=3,
-             min_child_weight=1, monotone_constraints=None,
-             n_estimators=200, n_jobs=0, num_parallel_tree=1,
-             objective='reg:linear', random_state=0, reg_alpha=0.5,
-             reg_lambda=1, scale_pos_weight=1, silent=1, subsample=0.7,
-             tree_method=None, validate_parameters=False, verbosity=2)
+winner_model = xgboost.XGBRegressor(alpha=0.9, base_score=0.5, booster=None, colsample_bylevel=1,
+                                colsample_bynode=1, colsample_bytree=0.7, gamma=0, gpu_id=-1,
+                                importance_type='gain', interaction_constraints=None,
+                                learning_rate=0.05, max_delta_step=0, max_depth=3,
+                                min_child_weight=1, monotone_constraints=None,
+                                n_estimators=200, n_jobs=0, num_parallel_tree=1,
+                                objective='reg:linear', random_state=0, reg_alpha=0.899999976,
+                                reg_lambda=0.5, scale_pos_weight=1, subsample=0.7,
+                                tree_method=None, validate_parameters=False, verbosity=None)
 
 ### Train the model using the training sets
 winner_model.fit(train, train_labels)
@@ -81,9 +81,9 @@ y_pred = winner_model.predict(test)
 err = np.subtract(pd.DataFrame(y_pred), test_labels)
 sq_err = np.subtract(pd.DataFrame(y_pred), test_labels)**2
 
-test_mae = float(np.mean(np.abs(err))) / np.mean(test_labels)
-test_rmse = float(np.sqrt(np.mean(sq_err))) / np.mean(test_labels)
-test_bias = float(np.mean(err)) / np.mean(test_labels)
+test_mae = float(np.mean(np.abs(err)))
+test_rmse = float(np.sqrt(np.mean(sq_err)))
+test_bias = float(np.mean(err))
 
 # plot error density
 pyplot.hist(err[0], bins = 50, density = True)
@@ -96,8 +96,11 @@ feat_imp = feat_imp.reset_index(drop = True)
 feat_imp['f_score_cumsum'] = feat_imp['f_score'].cumsum()
 
 pyplot.plot(list(feat_imp.index), feat_imp['f_score_cumsum'])
+pyplot.title('XGBoost Cumulative f-score')
+pyplot.ylabel('Cumulative f-score')
+pyplot.xlabel('Number of Features')
 
-feat_imp.to_csv('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 271B/Project/feature_selection/xgb_tuned_feat_select.csv')
+feat_imp.to_csv('C:/Users/iocak/OneDrive/Masaüstü/WI20/ECE 271B/Project/feature_selection/xgb_tuned_feat_select_2.csv')
 
 feat_imp[feat_imp['f_score_cumsum'] < 0.9]['col_name']
 
