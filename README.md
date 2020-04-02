@@ -102,3 +102,14 @@ doi:10.1023/A:1010933404324.
 Results, Tables, Soccer Stats and Odds,
 www.betexplorer.com/.
 17. “Daily Blurbs.” RotoGuru, www.rotoguru.net/.
+
+## Contributors
+| <a href="https://github.com/iocak28" target="_blank">**Ismail Ocak**</a> |
+| :---: |:---:| :---:| :---:|
+| [![Ismail Ocak](https://avatars0.githubusercontent.com/u/14804342?s=400&v=4)](https://github.com/iocak28)    |
+| <a href="https://github.com/iocak28" target="_blank">`github.com/iocak28`</a> |
+
+---
+
+## Support
+- email to 'i o c a k 2 8 at g m a i l   c o m'
