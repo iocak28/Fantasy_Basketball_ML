@@ -4,9 +4,11 @@
 
 ## Summary
 The growing power of the internet created many new industries after the 1990s. This phenomenon also created a new area called Fantasy 
-Basketball. On a given night, users draft real basketball players and earn points based on the real performances of these drafts. In this 
-multi-billiondollar industry, making accurate predictions for player performances or fantasy points is crucial. This project aims to use 
-machine learning for this purpose. In this project, we used different machine learning models in feature extraction, feature selection 
+Basketball. On a given night, users draft real basketball players and earn points based on the real performances of these drafts.
+
+Since their inception, Draftkings and Fanduel have changed the fantasy sports landscape. On a given night, millions of dollars of prizes are awarded to users who drafted a team for competitions lasting no longer than one night.
+
+In this multi-billiondollar industry, making accurate predictions for player performances or fantasy points is crucial. This project aims to use machine learning for this purpose. In this project, we used different machine learning models in feature extraction, feature selection 
 and, prediction processes. Such models include, XGBoost, RandomForest, AdaBoost, Artificial Neural Networks, Linear Regression and Lasso. 
 Comparing the performances of these different models we found that XGBoost can be successfully used for feature selection and prediction 
 processes in the Fantasy Basketball prediction area. Additionally, we developed a feature extraction method that optimizes the weights of 
