@@ -147,12 +147,3 @@ for i in model_param_list:
     
     print('\n Result: \n', temp_winner, '\n', temp_metrics, '\n \n')
     counter += 1
-
-
-##########
-# Tune lasso    
-i = model_param_list[1]
-temp_winner, temp_metrics = ts_cv_tuner(dataset, season_end_year_list, i[0], i[1])
-temp_metrics['model'] = str(temp_winner)
-pd.DataFrame(temp_metrics, index = [0]).to_csv(target + f'model_{counter}_lasso.csv')
-##########
