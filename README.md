@@ -29,7 +29,7 @@ The website basketball-reference.com offers detailed player summaries for every 
 - The importance of cross-validation in tuning is an undisputed fact. However, the existing literature does not focus on Walk-Forward validation using timeseries splitting. Walk-forward validation is an approach where we could apply to sports forecasting, demand forecasting, and the areas where the time dimension is important. In this project, we successfully used this approach to tune the model hyperparameters.
 
 ![Time-Series Cross Validation](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/walkforward.png)
-<img src="https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/walkforward.png" width="1000">
+<img src="https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/walkforward.png" width="500">
 
 ## Codes
 You can find the steps that were mentioned in this project below:
