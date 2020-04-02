@@ -1,5 +1,7 @@
 # Fantasy Basketball Prediction Using Machine Learning
 
+![Basketball-reference sample data](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/breference_sample.png)
+
 ## Summary
 The growing power of the internet created many new industries after the 1990s. This phenomenon also created a new area called Fantasy 
 Basketball. On a given night, users draft real basketball players and earn points based on the real performances of these drafts. In this 
@@ -35,6 +37,6 @@ Feature selection with XGBoost feature importance
 7. [model_xgb_with_new_features.py](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/source_codes/model_xgb_with_new_features.py):
 Try XGBoost model with optimized weighted moving average features
 8. [data_analysis.py](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/source_codes/data_analysis.py):
-Prelimenary and post data analyses
+Preliminary and post data analyses
 9. [tuning_code_v3_xgbselectedfeat_newfeat_smartlag_wma.ipynb](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/source_codes/tuning_code_v3_xgbselectedfeat_newfeat_smartlag_wma.ipynb):
 Tuning code for XGBoost.
