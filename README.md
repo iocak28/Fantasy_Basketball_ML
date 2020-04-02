@@ -64,7 +64,7 @@ Fantasy Sports Communities.” Interactive Technology
 and Smart Education, vol. 3, no. 4, 2006, pp.
 347–360., DOI:10.1108/17415650680000072.
 4. Miller, Bennett, director. Moneyball. Universal,
-2011.
+2011
 5. “Basketball Statistics and History.” Basketball,
 www.basketball-reference.com/.
 6. “Basketball-Reference-Web-Scraper.” PyPI,
