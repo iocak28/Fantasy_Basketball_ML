@@ -53,51 +53,50 @@ Preliminary and post data analyses
 Tuning code for XGBoost.
 
 ## References
-[1] “Daily Fantasy Sports For Cash.” DraftKings, draftkings.
+1. “Daily Fantasy Sports For Cash.” DraftKings, draftkings.
 com.
-[2] “Daily Fantasy Football, MLB, NBA, NHL Leagues
+2. “Daily Fantasy Football, MLB, NBA, NHL Leagues
 for Cash.” FanDuel, fanduel.com.
-[3] Smith, Brian, et al. “Decision Making in Online
+3. Smith, Brian, et al. “Decision Making in Online
 Fantasy Sports Communities.” Interactive Technology
 and Smart Education, vol. 3, no. 4, 2006, pp.
 347–360., DOI:10.1108/17415650680000072.
-[4] Miller, Bennett, director. Moneyball. Universal,
+4. Miller, Bennett, director. Moneyball. Universal,
 2011.
-[5] “Basketball Statistics and History.” Basketball,
+5. “Basketball Statistics and History.” Basketball,
 www.basketball-reference.com/.
-[6] “Basketball-Reference-Web-Scraper.” PyPI,
+6. “Basketball-Reference-Web-Scraper.” PyPI,
 pypi.org/project/basketball-reference-web-scraper/.
-[7] Barry, et al. Beating DraftKings at Daily Fantasy
+7. Barry, et al. Beating DraftKings at Daily Fantasy
 Sports.
-[8] Hermann, Eric. “Machine Learning Applications in
+8. Hermann, Eric. “Machine Learning Applications in
 Fantasy Basketball.” (2015).
-[9] Shivakumar, Shreyas. Learning to Turn Fantasy Basketball
+9. Shivakumar, Shreyas. Learning to Turn Fantasy Basketball
 Into Real Money Introduction to Machine
 Learning. shreyasskandan.github.io/.
-[10] Hoerl, Arthur E., and Robert W. Kennard. “Ridge
+10. Hoerl, Arthur E., and Robert W. Kennard. “Ridge
 Regression: Biased Estimation for Nonorthogonal
 Problems.” Technometrics 42 (2000): 80-86.
 8
-[11] Tibshirani, Robert. “Regression Shrinkage and Selection
+11. Tibshirani, Robert. “Regression Shrinkage and Selection
 Via the Lasso.” Journal of the Royal Statistical
 Society: Series B (Methodological), vol.
 58, no. 1, 1996, pp. 267–288., doi:10.1111/j.2517-
 6161.1996.tb02080.x.
-[12] Arao, Kengo. NBA Player Performance
+12. Arao, Kengo. NBA Player Performance
 Prediction and Lineup Optimization.
 github.com/KengoA/fantasy-basketball.
-[13] Chen, Tianqi, and Carlos Guestrin. “XGBoost.” Proceedings
+13. Chen, Tianqi, and Carlos Guestrin. “XGBoost.” Proceedings
 of the 22nd ACM SIGKDD International
-Conference on Knowledge Discovery and Data Mining
-- KDD 16, 2016, doi:10.1145/2939672.2939785.
-[14] Yoav Freund and Robert E. Schapire. Experiments
+Conference on Knowledge Discovery and Data Mining KDD 16, 2016, doi:10.1145/2939672.2939785.
+14. Yoav Freund and Robert E. Schapire. Experiments
 with a new boosting algorithm. In Machine Learning:
 Proceedings of the Thirteenth International
 Conference, pages 148–156, 1996
-[15] Breiman, Leo (2001). “Random Forests”.
+15. Breiman, Leo (2001). “Random Forests”.
 Machine Learning. 45 (1): 5–32.
 doi:10.1023/A:1010933404324.
-[16] “Betexplorer.” BetExplorer Soccer Stats -
+16. “Betexplorer.” BetExplorer Soccer Stats -
 Results, Tables, Soccer Stats and Odds,
 www.betexplorer.com/.
-[17] “Daily Blurbs.” RotoGuru, www.rotoguru.net/.
+17. “Daily Blurbs.” RotoGuru, www.rotoguru.net/.
