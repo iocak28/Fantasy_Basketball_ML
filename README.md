@@ -1,4 +1,4 @@
-# Fantasy_Basketball_ML
+# Fantasy Basketball Prediction Using Machine Learning
 
 ## Summary
 The growing power of the internet created many new industries after the 1990s. This phenomenon also created a new area called Fantasy 
@@ -9,6 +9,8 @@ and, prediction processes. Such models include, XGBoost, RandomForest, AdaBoost,
 Comparing the performances of these different models we found that XGBoost can be successfully used for feature selection and prediction 
 processes in the Fantasy Basketball prediction area. Additionally, we developed a feature extraction method that optimizes the weights of 
 moving average features using Linear Regression.
+
+For detailed information please refer to the [report](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/Report%20-%20Fantasy%20Basketball%20Prediction%20Using%20Machine%20Learning.pdf).
 
 ## What's New?
 - The existing literature in the Fantasy Basketball area is limited and the majority of the studies are projects that are available online. The use of XGBoost was not a new approach in Fantasy basketball area. However, feature selection with XGBoost is a novel approach in the area. Our studies prove that XGBoost can be successfully used in dimensionality reduction as well.
