@@ -90,9 +90,9 @@ def ts_cv_tuner(dataset, season_end_year_list, model_obj, parameters):
     err = np.subtract(pd.DataFrame(y_pred), test_labels)
     sq_err = np.subtract(pd.DataFrame(y_pred), test_labels)**2
     
-    test_mae = float(np.mean(np.abs(err))) / np.mean(test_labels)
-    test_rmse = float(np.sqrt(np.mean(sq_err))) / np.mean(test_labels)
-    test_bias = float(np.mean(err)) / np.mean(test_labels)
+    test_mae = float(np.mean(np.abs(err))) 
+    test_rmse = float(np.sqrt(np.mean(sq_err))) 
+    test_bias = float(np.mean(err)) 
     
     test_metrics = {'test_mae' : float(test_mae), 
                     'test_rmse' : float(test_rmse), 
@@ -156,98 +156,3 @@ temp_winner, temp_metrics = ts_cv_tuner(dataset, season_end_year_list, i[0], i[1
 temp_metrics['model'] = str(temp_winner)
 pd.DataFrame(temp_metrics, index = [0]).to_csv(target + f'model_{counter}_lasso.csv')
 ##########
-
-#{'test_mae': 0.34015561047684284,
-# 'test_rmse': 0.43327618262566864,
-# 'test_bias': -0.008486924916293822,
-# 'model': "Lasso(alpha=0.05, copy_X=True, fit_intercept=True, max_iter=1000,\n      normalize=False, positive=False, precompute=False, random_state=None,\n      selection='cyclic', tol=0.0001, warm_start=False)"}
-
-# Tune neural network
-   
-# Load libraries
-import numpy as np
-from keras import models
-from keras import layers
-from keras.layers import Dropout
-from keras.wrappers.scikit_learn import KerasRegressor
-from sklearn.model_selection import GridSearchCV
-
-
-# Create function returning a compiled network
-def create_network(optimizer='rmsprop', loss = 'mean_absolute_error', neur_first = 500, neur_hid = 1000, dropout_val = 0.2, number_hidden = 1):
-    
-    # Start neural network
-    network = models.Sequential()
-
-    # Add fully connected layer with a ReLU activation function
-    network.add(layers.Dense(units=neur_first, activation='relu', input_shape=(511,)))
-
-    # dropout
-    network.add(Dropout(dropout_val))
-    
-    for i in range(number_hidden):
-        # Add fully connected layer with a ReLU activation function
-        network.add(layers.Dense(units=neur_hid, activation='relu'))
-        
-        # dropout
-        network.add(Dropout(dropout_val))
-
-    # Add fully connected layer with a sigmoid activation function
-    network.add(layers.Dense(units=1, activation='linear'))
-
-    # Compile neural network
-    network.compile(loss=loss,
-                    optimizer=optimizer) 
-    
-    # Return compiled network
-    return network
-
-neural_network = KerasRegressor(build_fn=create_network, verbose=2)
-
-# Create hyperparameter space
-epochs = [30, 100]
-batches = [1000]
-optimizers = ['Adadelta']
-validation_splits = [0.2]
-losses =['mean_absolute_error']
-neur_first = [100, 500]
-neur_hid = [2000]
-dropout_val = [0.2]
-number_hidden = [1, 2, 3]
-
-#epochs = [30]
-#batches = [1000]
-#optimizers = ['Adadelta']
-#validation_splits = [0.2]
-#losses =['mean_squared_error']
-
-# surprisingly this seems to work
-
-# Create hyperparameter options
-hyperparameters = dict(optimizer=optimizers, epochs=epochs, batch_size=batches, 
-                       validation_split = validation_splits, loss = losses,
-                       neur_first = neur_first, neur_hid = neur_hid, dropout_val= dropout_val,
-                       number_hidden = number_hidden)
-
-# tune
-season_end_year_list = [2015, 2017]
-temp_winner, temp_metrics = ts_cv_tuner(dataset, season_end_year_list, neural_network, hyperparameters)
-
-## Winner
-
-#{'test_mae': 0.39348045800303527,
-# 'test_rmse': 0.5166015843001839,
-# 'test_bias': -0.22493961576689697}
-#
-#{'verbose': 2,
-# 'batch_size': 1000,
-# 'dropout_val': 0.2,
-# 'epochs': 30,
-# 'loss': 'mean_absolute_error',
-# 'neur_first': 100,
-# 'neur_hid': 2000,
-# 'optimizer': 'Adadelta',
-# 'validation_split': 0.2,
-# 'build_fn': <function __main__.create_network(optimizer='rmsprop', loss='mean_absolute_error', neur_first=500, neur_hid=1000, dropout_val=0.2)>}
-
-
