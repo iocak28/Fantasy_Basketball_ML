@@ -61,6 +61,7 @@ scaler.fit(train)
 train = scaler.transform(train)
 test = scaler.transform(test)
 
+# parameters from a known xgb model from previous trials
 winner_model = xgboost.XGBRegressor(alpha=0.9, base_score=0.5, booster=None, colsample_bylevel=1,
                                 colsample_bynode=1, colsample_bytree=0.7, gamma=0, gpu_id=-1,
                                 importance_type='gain', interaction_constraints=None,
@@ -142,6 +143,7 @@ scaler.fit(train)
 train = scaler.transform(train)
 test = scaler.transform(test)
 
+# parameters from a known xgb model from previous trials
 winner_model = xgboost.XGBRegressor(alpha=0.5, base_score=0.5, booster=None, colsample_bylevel=1,
              colsample_bynode=1, colsample_bytree=0.7, gamma=0, gpu_id=-1,
              importance_type='gain', interaction_constraints=None, 
@@ -162,9 +164,9 @@ y_pred = winner_model.predict(test)
 err_2 = np.subtract(pd.DataFrame(y_pred), test_labels)
 sq_err_2 = np.subtract(pd.DataFrame(y_pred), test_labels)**2
 
-float(np.mean(np.abs(err_2))) / np.mean(test_labels)
-float(np.sqrt(np.mean(sq_err_2))) / np.mean(test_labels)
-float(np.mean(err_2)) / np.mean(test_labels)
+float(np.mean(np.abs(err_2)))
+float(np.sqrt(np.mean(sq_err_2)))
+float(np.mean(err_2))
 
 
 
