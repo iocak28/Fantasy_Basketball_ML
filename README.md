@@ -105,9 +105,6 @@ www.betexplorer.com/.
 
 ## Contributors
 | <a href="https://github.com/iocak28" target="_blank">**Ismail Ocak**</a> |
-| :---: |:---:| :---:| :---:|
-| [![Ismail Ocak](https://avatars0.githubusercontent.com/u/14804342?s=400&v=4)](https://github.com/iocak28)    |
-| <a href="https://github.com/iocak28" target="_blank">`github.com/iocak28`</a> |
 
 ---
 
