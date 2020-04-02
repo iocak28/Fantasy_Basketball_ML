@@ -17,9 +17,15 @@ For detailed information please refer to the [report](https://github.com/iocak28
 ## What's New?
 - The existing literature in the Fantasy Basketball area is limited and the majority of the studies are projects that are available online. The use of XGBoost was not a new approach in Fantasy basketball area. However, feature selection with XGBoost is a novel approach in the area. Our studies prove that XGBoost can be successfully used in dimensionality reduction as well.
 
+![XGB Features](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/recent_feat_imp.png)
+
 - The method ‘Optimized Moving Average Features’ is a totally new and unique approach in Fantasy Basketball. Using this approach we optimized and automated the feature extraction process. Instead of a feature extraction process that relies solely on industry knowledge, we proposed a simple but effective machine learning approach. In the existing literature, using weighted moving average features is not a novel thing.  However, the weights in the existing literature are based on intuitions and industry knowledge.
 
+![Steps](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/steps.png)
+
 - The importance of cross-validation in tuning is an undisputed fact. However, the existing literature does not focus on Walk-Forward validation using timeseries splitting. Walk-forward validation is an approach where we could apply to sports forecasting, demand forecasting, and the areas where the time dimension is important. In this project, we successfully used this approach to tune the model hyperparameters.
+
+![Time-Series Cross Validation](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/img/walkforward.png)
 
 ## Codes
 1. [get_player_historic_data.py](https://github.com/iocak28/Fantasy_Basketball_ML/blob/master/source_codes/get_player_historic_data.py):
