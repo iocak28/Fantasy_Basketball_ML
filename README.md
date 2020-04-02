@@ -8,7 +8,7 @@ Basketball. On a given night, users draft real basketball players and earn point
 
 Since their inception, Draftkings and Fanduel have changed the fantasy sports landscape. On a given night, millions of dollars of prizes are awarded to users who drafted a team for competitions lasting no longer than one night.
 
-In this multi-billiondollar industry, making accurate predictions for player performances or fantasy points is crucial. This project aims to use machine learning for this purpose. In this project, we used different machine learning models in feature extraction, feature selection 
+In this multi-billion dollar industry, making accurate predictions for player performances or fantasy points is crucial. This project aims to use machine learning for this purpose. In this project, we used different machine learning models in feature extraction, feature selection 
 and, prediction processes. Such models include, XGBoost, RandomForest, AdaBoost, Artificial Neural Networks, Linear Regression and Lasso. 
 Comparing the performances of these different models we found that XGBoost can be successfully used for feature selection and prediction 
 processes in the Fantasy Basketball prediction area. Additionally, we developed a feature extraction method that optimizes the weights of 
